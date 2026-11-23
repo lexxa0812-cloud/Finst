@@ -1,0 +1,1322 @@
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Финансовый контур · Дорожное учреждение</title>
+<style>
+:root{
+  --ink:#0f1e33; --slate:#334155; --muted:#64748b; --line:#e2e8f0;
+  --bg:#f4f7fb; --card:#ffffff;
+  --blue:#2563eb; --sky:#0ea5e9; --cyan:#22d3ee;
+  --gold:#f59e0b; --green:#10b981; --red:#ef4444; --violet:#8b5cf6; --rose:#f43f5e;
+  --r:16px;
+  --shadow:0 1px 2px rgba(15,30,51,.05);
+  --shadow-lg:0 18px 44px rgba(15,30,51,.13);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;line-height:1.22}
+p{margin:0}
+button{font:inherit}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative;overflow:hidden;color:#dbe7f5;padding:46px 20px 40px;
+  background:
+    radial-gradient(900px 380px at 10% -25%, rgba(37,99,235,.60), transparent 70%),
+    radial-gradient(760px 340px at 92% -5%, rgba(14,165,233,.38), transparent 72%),
+    linear-gradient(135deg,#08152b 0%,#0d2140 55%,#071327 100%);
+}
+.hero::before{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:6px;
+  background:repeating-linear-gradient(90deg,var(--gold) 0 26px,transparent 26px 52px);
+  opacity:.55;
+}
+.hero::after{
+  content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle, rgba(34,211,238,.18), transparent 62%);
+}
+.hero-in{max-width:1240px;margin:0 auto;position:relative;z-index:2}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.15em;
+  text-transform:uppercase;font-weight:700;color:#8fb6e8;
+  border:1px solid rgba(143,182,232,.28);background:rgba(37,99,235,.14);
+  padding:6px 13px;border-radius:999px;
+}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.hero h1{
+  margin:18px 0 12px;font-size:clamp(26px,4.6vw,52px);font-weight:800;letter-spacing:-.028em;
+  background:linear-gradient(100deg,#cfe3ff 0%,#60a5fa 26%,#22d3ee 50%,#7dd3fc 72%,rgba(191,219,254,.15) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 8px 26px rgba(34,211,238,.20));
+}
+.hero .lead{max-width:840px;color:#a9c1de;font-size:clamp(14px,1.6vw,17px)}
+.hero-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.hstat{
+  background:rgba(255,255,255,.055);border:1px solid rgba(143,182,232,.20);
+  border-radius:14px;padding:10px 16px;min-width:132px;backdrop-filter:blur(6px);
+}
+.hstat b{display:block;font-size:22px;color:#e6f2ff;letter-spacing:-.02em}
+.hstat span{font-size:12px;color:#8fb6e8;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+
+/* ================= TABS ================= */
+.tabs{
+  position:sticky;top:0;z-index:60;display:flex;gap:6px;overflow-x:auto;padding:10px 16px;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(15,30,51,.05);
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  border:0;background:transparent;padding:9px 16px;border-radius:999px;cursor:pointer;
+  font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap;transition:.22s;
+}
+.tab:hover{background:#eef4ff;color:var(--blue)}
+.tab.active{
+  background:linear-gradient(135deg,var(--blue),var(--sky));color:#fff;
+  box-shadow:0 8px 20px rgba(37,99,235,.32);
+}
+
+/* ================= LAYOUT ================= */
+.wrap{max-width:1240px;margin:0 auto;padding:26px 16px 90px}
+.section{display:none;animation:fade .35s ease}
+.section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.sec-head{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;margin-bottom:20px}
+.sec-head h2{font-size:clamp(20px,2.5vw,28px);letter-spacing:-.02em}
+.sec-head .sub{color:var(--muted);font-size:14px;max-width:720px;margin-top:4px}
+.accent-line{width:56px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--cyan));margin-bottom:10px}
+
+/* ================= CARDS ================= */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;
+  box-shadow:var(--shadow);transition:transform .28s cubic-bezier(.2,.8,.3,1),box-shadow .28s,border-color .28s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#c7dbfa}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(258px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+
+/* ================= TREE ================= */
+.tree{display:flex;flex-direction:column;align-items:center}
+.tier{width:100%;display:grid;gap:16px}
+.tier-1{grid-template-columns:minmax(260px,520px);justify-content:center}
+.tier-2{grid-template-columns:repeat(auto-fit,minmax(215px,1fr));position:relative;margin-top:34px}
+.tier-2::before{
+  content:"";position:absolute;top:-18px;left:6%;right:6%;height:2px;
+  background:linear-gradient(90deg,transparent,#cbd8ea 12%,#cbd8ea 88%,transparent);
+}
+.node{
+  position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:16px;transition:.26s;box-shadow:var(--shadow);
+}
+.node:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.tier-2 .node::before{
+  content:"";position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  width:2px;height:18px;background:#cbd8ea;
+}
+.node .role{font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:800;color:var(--muted)}
+.node h4{font-size:15px;margin:6px 0 8px}
+.node .meta{font-size:12.5px;color:var(--muted)}
+.node .meta b{color:var(--slate);font-weight:700}
+.node-dir{
+  background:linear-gradient(135deg,#0d2140,#15325c);color:#dbe7f5;border:0;
+  text-align:center;box-shadow:0 16px 38px rgba(13,33,64,.28);
+}
+.node-dir h4{color:#fff;font-size:18px}
+.node-dir .role{color:#8fb6e8}
+.node-dir .meta{color:#a9c1de}
+.tag-chip{
+  display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;
+  letter-spacing:.02em;
+}
+.chip-fin{background:#e0edff;color:#1d4ed8}
+.chip-out{background:#f1f5f9;color:#475569}
+.chip-base{background:#fef3c7;color:#92400e}
+
+/* zone bands */
+.zone{border-radius:var(--r);padding:18px;border:1px dashed #cbd8ea;background:#fbfdff}
+.zone.base{border-color:#fcd34d;background:#fffdf5}
+.zone h4{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.zone ul{margin:0;padding-left:18px;color:var(--slate);font-size:14px}
+.zone li{margin:5px 0}
+
+/* ================= POSITION CARDS ================= */
+.pos{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px}
+.pos .bar{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:38px;transition:width .35s ease}
+.pos:hover .bar{width:100%}
+.pos h4{font-size:16.5px;letter-spacing:-.01em}
+.pos .dept{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--sky)}
+.pos ul{margin:0;padding-left:17px;font-size:13.5px;color:var(--slate)}
+.pos li{margin:3px 0}
+.pos .foot{border-top:1px dashed var(--line);padding-top:10px;font-size:12.5px;color:var(--muted);margin-top:auto}
+.pos .foot b{color:var(--ink)}
+.pos .resp{background:#f6faff;border-left:3px solid var(--blue);border-radius:8px;padding:8px 11px;font-size:13px;color:var(--slate)}
+
+/* ================= FLOW ================= */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px}
+.step{
+  position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 13px;
+  cursor:pointer;transition:.26s;text-align:left;
+}
+.step:hover{transform:translateY(-5px);border-color:#bfdbfe;box-shadow:var(--shadow-lg)}
+.step.active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.14),var(--shadow-lg)}
+.step .num{
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:800;
+  background:linear-gradient(135deg,var(--blue),var(--sky));color:#fff;margin-bottom:9px;
+}
+.step .t{font-size:13.5px;font-weight:700;line-height:1.3}
+.step .w{font-size:11.5px;color:var(--muted);margin-top:5px}
+.step::after{
+  content:"›";position:absolute;right:-9px;top:50%;transform:translateY(-50%);
+  color:#c3d3e8;font-size:22px;font-weight:800;
+}
+.step:last-child::after{display:none}
+
+.detail{
+  margin-top:18px;border-radius:var(--r);padding:22px;color:#e8f1fb;
+  background:linear-gradient(135deg,#0d2140,#16386a);
+  box-shadow:0 20px 44px rgba(13,33,64,.26);
+}
+.detail h3{font-size:19px;color:#fff;margin-bottom:4px}
+.detail .dgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:14px}
+.detail .dcell{background:rgba(255,255,255,.07);border:1px solid rgba(143,182,232,.20);border-radius:12px;padding:12px 14px}
+.detail .dcell span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8fb6e8;font-weight:800;margin-bottom:5px}
+.detail .dcell p{font-size:13.5px;color:#dce9f8}
+.detail .note{margin-top:14px;font-size:13px;color:#ffd98a;border-left:3px solid var(--gold);padding-left:12px}
+
+/* ================= CASES ================= */
+.case{
+  border-radius:var(--r);padding:20px;border:1px solid #dbe7f8;background:linear-gradient(180deg,#ffffff,#f7fbff);
+  position:relative;overflow:hidden;
+}
+.case::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(--blue),var(--cyan))}
+.case.warn::before{background:linear-gradient(180deg,var(--gold),#fbbf24)}
+.case.ok::before{background:linear-gradient(180deg,var(--green),#34d399)}
+.case h4{font-size:15px;margin-bottom:8px}
+.case p{font-size:13.5px;color:var(--slate)}
+.case .out{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--blue)}
+
+/* ================= FORMS ================= */
+.form-card{display:flex;flex-direction:column;gap:0}
+.form-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.form-code{
+  font-size:12px;font-weight:800;letter-spacing:.06em;padding:5px 11px;border-radius:8px;
+  background:#e0edff;color:#1d4ed8;
+}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.field input,.field select,.field textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;
+  font-size:14px;color:var(--ink);background:#fbfdff;transition:.2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.13);
+}
+.field textarea{resize:vertical;min-height:70px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checks{display:flex;flex-wrap:wrap;gap:10px}
+.checks label{
+  display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--slate);
+  background:#f4f8ff;border:1px solid var(--line);padding:7px 12px;border-radius:999px;cursor:pointer;
+}
+.checks input{accent-color:var(--blue)}
+
+/* ================= BUTTONS ================= */
+.btn{
+  border:0;border-radius:11px;padding:11px 18px;font-weight:700;font-size:14px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;transition:.22s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--sky));color:#fff;box-shadow:0 10px 22px rgba(37,99,235,.28)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(37,99,235,.36)}
+.btn-ghost{background:#fff;border:1px solid var(--line);color:var(--slate)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:#f4f8ff}
+.btn-gold{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#3b2600;box-shadow:0 10px 22px rgba(245,158,11,.3)}
+.btn-gold:hover{transform:translateY(-2px)}
+
+/* ================= TOOLBAR ================= */
+.toolbar{
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:12px;margin-bottom:18px;box-shadow:var(--shadow);
+}
+.search{flex:1 1 240px;position:relative}
+.search input{
+  width:100%;padding:11px 14px 11px 40px;border:1px solid var(--line);border-radius:11px;
+  font:inherit;font-size:14px;background:#fbfdff;transition:.2s;
+}
+.search input:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.search::before{content:"⌕";position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:19px;color:var(--muted)}
+select.filter{
+  padding:11px 13px;border:1px solid var(--line);border-radius:11px;font:inherit;font-size:14px;
+  background:#fbfdff;color:var(--slate);cursor:pointer;
+}
+select.filter:focus{outline:none;border-color:var(--blue)}
+
+/* ================= TABLE ================= */
+.table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:940px}
+thead th{
+  position:sticky;top:0;background:#f1f6fd;text-align:left;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--muted);padding:13px 14px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody td{padding:13px 14px;border-bottom:1px solid #eef2f8;font-size:13.5px;vertical-align:top}
+tbody tr{transition:.18s}
+tbody tr:hover{background:#f7fbff}
+tbody tr:last-child td{border-bottom:0}
+.doc-title{font-weight:700;color:var(--ink)}
+.doc-num{font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:.04em}
+.badge{
+  display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:800;white-space:nowrap;
+}
+.note-cell{font-size:12.5px;color:var(--muted);max-width:230px}
+.empty{padding:38px;text-align:center;color:var(--muted);font-size:14px}
+
+/* ================= SUMMARY STRIP ================= */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+.sum-card{
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+  border-top:3px solid var(--blue);transition:.25s;
+}
+.sum-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.sum-card b{display:block;font-size:24px;letter-spacing:-.02em}
+.sum-card span{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* ================= TAGS ================= */
+.tags{display:flex;flex-wrap:wrap;gap:9px}
+.tag{
+  font-size:13px;font-weight:700;padding:8px 15px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);color:var(--slate);cursor:default;
+  transition:.22s;
+}
+.tag:hover{
+  transform:translateY(-3px);border-color:transparent;color:#fff;
+  background:linear-gradient(135deg,var(--blue),var(--sky));
+  box-shadow:0 10px 22px rgba(37,99,235,.30);
+}
+
+/* ================= LIMITS ================= */
+.limit{
+  display:flex;gap:14px;padding:18px;border-radius:var(--r);background:#fff;border:1px solid var(--line);
+  border-left:5px solid var(--blue);transition:.26s;
+}
+.limit:hover{transform:translateX(4px);box-shadow:var(--shadow-lg)}
+.limit .ico{
+  flex:0 0 42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:19px;
+  background:#e0edff;color:#1d4ed8;
+}
+.limit.red{border-left-color:var(--red)} .limit.red .ico{background:#ffe4e6;color:#be123c}
+.limit.gold{border-left-color:var(--gold)} .limit.gold .ico{background:#fef3c7;color:#92400e}
+.limit.green{border-left-color:var(--green)} .limit.green .ico{background:#d1fae5;color:#047857}
+.limit h4{font-size:14.5px;margin-bottom:4px}
+.limit p{font-size:13.5px;color:var(--muted)}
+
+/* ================= MODAL ================= */
+.overlay{
+  position:fixed;inset:0;background:rgba(8,21,43,.55);backdrop-filter:blur(4px);
+  display:none;place-items:center;z-index:200;padding:18px;
+}
+.overlay.open{display:grid}
+.modal{
+  background:#fff;border-radius:20px;width:min(860px,100%);max-height:88vh;overflow:auto;
+  padding:26px;box-shadow:0 40px 90px rgba(8,21,43,.4);
+}
+.modal h3{font-size:20px;margin-bottom:6px}
+.modal .hint{font-size:13px;color:var(--muted);margin-bottom:14px}
+.modal textarea{
+  width:100%;min-height:340px;font-family:ui-monospace,Consolas,monospace;font-size:12.5px;
+  padding:14px;border:1px solid var(--line);border-radius:12px;background:#fbfdff;line-height:1.5;
+}
+.modal textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.13)}
+.modal .actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;margin-top:16px}
+
+/* ================= TOAST ================= */
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,90px);z-index:300;
+  background:linear-gradient(135deg,#0d2140,#16386a);color:#fff;padding:13px 22px;border-radius:12px;
+  font-size:14px;font-weight:600;box-shadow:0 20px 44px rgba(8,21,43,.4);opacity:0;transition:.4s;
+}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+/* ================= PRESENT MODE ================= */
+.present-banner{
+  display:none;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#3b2600;
+  padding:11px 20px;font-weight:800;font-size:14px;text-align:center;letter-spacing:.03em;
+}
+body.present .present-banner{display:block}
+body.present{font-size:17px}
+body.present .edit-only{display:none!important}
+body.present .hero h1{font-size:clamp(30px,5.4vw,62px)}
+body.present .card,body.present .node,body.present .step{box-shadow:0 10px 30px rgba(15,30,51,.10)}
+
+/* ================= PRINT ================= */
+@media print{
+  .tabs,.toolbar,.no-print,.toast,.overlay{display:none!important}
+  body{background:#fff;font-size:11pt}
+  .hero{background:#0d2140!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section{display:block!important;page-break-inside:avoid}
+  .card,.node,.step,.case,.limit{break-inside:avoid;box-shadow:none}
+  table{min-width:0}
+  thead th{position:static}
+}
+
+/* ================= MOBILE ================= */
+@media (max-width:720px){
+  .hero{padding:34px 16px 30px}
+  .wrap{padding:18px 12px 70px}
+  .row2{grid-template-columns:1fr}
+  .step::after{display:none}
+  .tier-2::before,.tier-2 .node::before{display:none}
+  .tier-2{margin-top:16px}
+  .detail{padding:18px}
+  .modal{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="present-banner">Режим подготовки материалов для представления руководству</div>
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="kicker"><i></i> Финансовый контур · дорожное хозяйство</div>
+    <h1>Рабочее место финансового директора</h1>
+    <p class="lead">
+      Единая централизованная бухгалтерия, финансово-экономический отдел, отдел закупок и отдел снабжения —
+      в одной управляемой схеме: оргструктура, должности, маршрут документа от заявки до оплаты и учёта,
+      формы, реестр и контрольные точки.
+    </p>
+    <div class="hero-stats">
+      <div class="hstat"><b id="statDept">0</b><span>подразделений</span></div>
+      <div class="hstat"><b id="statPos">0</b><span>должностей</span></div>
+      <div class="hstat"><b id="statSteps">0</b><span>этапов маршрута</span></div>
+      <div class="hstat"><b id="statDocs">0</b><span>документов в реестре</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="org">Оргструктура</button>
+  <button class="tab" data-tab="positions">Должности</button>
+  <button class="tab" data-tab="flow">Маршрут документа</button>
+  <button class="tab" data-tab="forms">Формы</button>
+  <button class="tab" data-tab="registry">Реестр и контроль</button>
+  <button class="tab" data-tab="limits">Ограничения</button>
+  <button class="tab" data-tab="tools">Инструменты</button>
+</nav>
+
+<main class="wrap">
+
+  <!-- ================= ORG ================= -->
+  <section class="section active" id="sec-org">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Организационная структура подчинённости</h2>
+        <p class="sub">Финансовый контур замкнут на финансового директора. Юридический и кадровый блоки — в прямом подчинении директора и в финансовый контур не входят.</p>
+      </div>
+    </div>
+
+    <div class="card" style="padding:26px 20px">
+      <div class="tree">
+        <div class="tier tier-1">
+          <div class="node node-dir">
+            <div class="role">Верхний уровень</div>
+            <h4>Директор учреждения</h4>
+            <div class="meta">Прямое подчинение: <b style="color:#ffd98a">юридический блок</b>, <b style="color:#ffd98a">кадровый блок</b>, <b style="color:#ffd98a">удалённая база</b></div>
+          </div>
+        </div>
+        <div class="tier tier-2" id="orgTier"></div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="zone">
+        <h4>Центральный офис — финансовый контур</h4>
+        <ul>
+          <li>Все основные финансовые сотрудники работают в центральном офисе</li>
+          <li>Единая централизованная бухгалтерия — без филиальных бухгалтерий</li>
+          <li>Согласование, подпись, оплата и учёт — только здесь</li>
+        </ul>
+      </div>
+      <div class="zone base">
+        <h4>Удалённая производственная база</h4>
+        <ul>
+          <li>Только сбор первичных документов</li>
+          <li>Только передача комплекта в центральную бухгалтерию</li>
+          <li>Учёт, оплата и согласование на базе не выполняются</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= POSITIONS ================= -->
+  <section class="section" id="sec-positions">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Карточки должностей</h2>
+        <p class="sub">Функции, подчинённость и зона ответственности. Наведите курсор на карточку — акцентная линия раскрывается на всю ширину.</p>
+      </div>
+    </div>
+
+    <div class="toolbar no-print">
+      <div class="search">
+        <input id="posSearch" type="search" placeholder="Поиск по должности, функции, зоне ответственности…">
+      </div>
+      <select class="filter" id="posDeptFilter"><option value="">Все подразделения</option></select>
+    </div>
+
+    <div class="grid g3" id="posGrid"></div>
+  </section>
+
+  <!-- ================= FLOW ================= -->
+  <section class="section" id="sec-flow">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Движение документа: от заявки до оплаты и учёта</h2>
+        <p class="sub">Нажмите на этап — откроются ответственный, срок, результат и контрольная точка.</p>
+      </div>
+    </div>
+
+    <div class="flow" id="flowGrid"></div>
+    <div id="flowDetail"></div>
+
+    <div class="sec-head" style="margin-top:38px">
+      <div>
+        <div class="accent-line"></div>
+        <h2 style="font-size:22px">Разбор типовых кейсов</h2>
+        <p class="sub">Выделенные ситуации, которые чаще всего тормозят оплату.</p>
+      </div>
+    </div>
+    <div class="grid g3" id="caseGrid"></div>
+  </section>
+
+  <!-- ================= FORMS ================= -->
+  <section class="section" id="sec-forms">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Рабочие формы</h2>
+        <p class="sub">Заполнение формирует запись в реестре документов со статусом «Черновик».</p>
+      </div>
+    </div>
+    <div class="grid g3" id="formsGrid"></div>
+  </section>
+
+  <!-- ================= REGISTRY ================= -->
+  <section class="section" id="sec-registry">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Реестр рабочих документов финансового отдела</h2>
+        <p class="sub">Контрольные точки, ответственные, сроки, статусы и замечания по каждому документу.</p>
+      </div>
+      <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost" id="btnEdit">⚙ Данные</button>
+        <button class="btn btn-ghost" id="btnPresent">👔 Режим руководства</button>
+        <button class="btn btn-ghost" id="btnWord">📄 Word</button>
+        <button class="btn btn-primary" id="btnPdf">🖨 PDF</button>
+      </div>
+    </div>
+
+    <div class="summary" id="summaryStrip"></div>
+
+    <div class="toolbar no-print">
+      <div class="search">
+        <input id="docSearch" type="search" placeholder="Поиск: номер, документ, ответственный, замечание…">
+      </div>
+      <select class="filter" id="docStatusFilter"><option value="">Все статусы</option></select>
+      <select class="filter" id="docDeptFilter"><option value="">Все подразделения</option></select>
+      <button class="btn btn-ghost" id="btnReset">Сбросить</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Документ</th>
+            <th>Подразделение</th>
+            <th>Ответственный</th>
+            <th>Контрольная точка</th>
+            <th>Срок</th>
+            <th>Статус</th>
+            <th>Замечания</th>
+          </tr>
+        </thead>
+        <tbody id="docBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= LIMITS ================= -->
+  <section class="section" id="sec-limits">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Зафиксированные ограничения модели</h2>
+        <p class="sub">Эти правила не меняются при настройке данных — они задают каркас финансового контура.</p>
+      </div>
+    </div>
+    <div class="grid" id="limitGrid" style="gap:14px"></div>
+  </section>
+
+  <!-- ================= TOOLS ================= -->
+  <section class="section" id="sec-tools">
+    <div class="sec-head">
+      <div>
+        <div class="accent-line"></div>
+        <h2>Инструменты и сервисы</h2>
+        <p class="sub">Сетка рабочих инструментов финансового директора.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="tags" id="tagsGrid"></div>
+    </div>
+
+    <div class="sec-head" style="margin-top:34px">
+      <div>
+        <div class="accent-line"></div>
+        <h2 style="font-size:22px">Как менять данные без переделки сайта</h2>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <h4 style="font-size:15px;margin-bottom:8px">⚙ Кнопка «Данные»</h4>
+        <p style="font-size:13.5px;color:var(--muted)">В разделе «Реестр и контроль» откройте редактор JSON: подразделения, должности, сотрудники, маршруты, статусы и документы.</p>
+      </div>
+      <div class="card">
+        <h4 style="font-size:15px;margin-bottom:8px">💾 Автосохранение</h4>
+        <p style="font-size:13.5px;color:var(--muted)">Изменения сохраняются в localStorage браузера и восстанавливаются при следующем открытии.</p>
+      </div>
+      <div class="card">
+        <h4 style="font-size:15px;margin-bottom:8px">↺ Сброс</h4>
+        <p style="font-size:13.5px;color:var(--muted)">В редакторе есть возврат к исходной демонстрационной модели одним нажатием.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= MODAL ================= -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>Редактор данных</h3>
+    <p class="hint">Измените JSON и сохраните. Раздел: <b id="editSectionName"></b></p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px" id="editTabs"></div>
+    <textarea id="editArea" spellcheck="false"></textarea>
+    <div class="actions">
+      <button class="btn btn-ghost" id="btnResetAll">↺ Сбросить всё</button>
+      <button class="btn btn-ghost" id="btnCancel">Отмена</button>
+      <button class="btn btn-primary" id="btnSave">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   ДАННЫЕ МОДЕЛИ
+   ============================================================ */
+const DEFAULT_DATA = {
+  departments: [
+    {id:'buh', name:'Бухгалтерия (централизованная)', head:'Главный бухгалтер', office:'Центральный офис', contour:'Финансовый контур', parent:'Финансовый директор', color:'#2563eb', funcs:'Учёт, отчётность, платежи, налоги'},
+    {id:'feo', name:'Финансово-экономический отдел', head:'Начальник ФЭО', office:'Центральный офис', contour:'Финансовый контур', parent:'Финансовый директор', color:'#0ea5e9', funcs:'ПФХД, лимиты, экономический анализ'},
+    {id:'zak', name:'Отдел закупок', head:'Начальник отдела закупок', office:'Центральный офис', contour:'Финансовый контур', parent:'Финансовый директор', color:'#8b5cf6', funcs:'План-график, процедуры, контракты'},
+    {id:'sn',  name:'Отдел снабжения', head:'Начальник отдела снабжения', office:'Центральный офис', contour:'Финансовый контур', parent:'Финансовый директор', color:'#f59e0b', funcs:'Заявки, приёмка, склад, ГСМ'},
+    {id:'base',name:'Удалённая производственная база', head:'Начальник базы', office:'Удалённая база', contour:'Вне финансового контура', parent:'Директор (напрямую)', color:'#64748b', funcs:'Сбор и передача первичных документов'},
+    {id:'ur',  name:'Юридический блок', head:'Начальник юридического отдела', office:'Центральный офис', contour:'Вне финансового контура', parent:'Директор (напрямую)', color:'#f43f5e', funcs:'Правовая экспертиза договоров'},
+    {id:'kad', name:'Кадровый блок', head:'Начальник отдела кадров', office:'Центральный офис', contour:'Вне финансового контура', parent:'Директор (напрямую)', color:'#10b981', funcs:'Кадры, трудовые договоры'}
+  ],
+
+  positions: [
+    {
+      title:'Финансовый директор', dept:'Финансовый контур', deptId:'feo',
+      sub:'Директор учреждения', subs:'Бухгалтерия, ФЭО, отдел закупок, отдел снабжения',
+      functions:['Финансовая стратегия и бюджетный контроль','Утверждение маршрутов согласования','Подпись заявок на оплату в пределах порога','Контроль исполнения ПФХД'],
+      resp:'Персональная ответственность за финансовую дисциплину учреждения и целевое использование средств.'
+    },
+    {
+      title:'Главный бухгалтер', dept:'Бухгалтерия', deptId:'buh',
+      sub:'Финансовый директор', subs:'Бухгалтеры расчётной и материальной группы',
+      functions:['Организация единого централизованного учёта','Проверка комплектности первичных документов','Подпись платёжных документов','Формирование отчётности'],
+      resp:'Достоверность учёта и отчётности, своевременность закрытия периода.'
+    },
+    {
+      title:'Начальник ФЭО', dept:'Финансово-экономический отдел', deptId:'feo',
+      sub:'Финансовый директор', subs:'Экономисты, специалист по нормированию',
+      functions:['Формирование и корректировка ПФХД','Контроль лимитов бюджетных обязательств','Экономическое обоснование закупок','Анализ исполнения бюджета'],
+      resp:'Соответствие заявок лимитам и обоснованность НМЦК.'
+    },
+    {
+      title:'Экономист ФЭО', dept:'Финансово-экономический отдел', deptId:'feo',
+      sub:'Начальник ФЭО', subs:'—',
+      functions:['Проверка заявок подразделений','Расчёт НМЦК','Ведение реестра лимитов','Подготовка справок для руководства'],
+      resp:'Корректность расчётов и виза «бюджет подтверждён».'
+    },
+    {
+      title:'Начальник отдела закупок', dept:'Отдел закупок', deptId:'zak',
+      sub:'Финансовый директор', subs:'Специалисты по закупкам',
+      functions:['Ведение плана-графика','Выбор способа закупки','Подготовка и сопровождение контрактов','Работа в ЕИС'],
+      resp:'Соблюдение процедур и сроков закупочного цикла.'
+    },
+    {
+      title:'Начальник отдела снабжения', dept:'Отдел снабжения', deptId:'sn',
+      sub:'Финансовый директор', subs:'Кладовщик, агент по снабжению',
+      functions:['Приём и обработка заявок подразделений','Приёмка ТМЦ и ГСМ','Ведение склада','Формирование комплекта первички'],
+      resp:'Полнота и своевременность передачи первичных документов в бухгалтерию.'
+    },
+    {
+      title:'Начальник удалённой базы', dept:'Удалённая производственная база', deptId:'base',
+      sub:'Директор (напрямую)', subs:'Мастер участка, оператор первичной документации',
+      functions:['Сбор первичных документов участка','Формирование и регистрация заявок','Передача комплекта в центральную бухгалтерию'],
+      resp:'Только сбор и передача первички — учёт и оплата не выполняются.'
+    },
+    {
+      title:'Ведущий бухгалтер', dept:'Бухгалтерия', deptId:'buh',
+      sub:'Главный бухгалтер', subs:'—',
+      functions:['Отражение операций в учёте','Сверка с контрагентами','Подготовка платёжных поручений','Контроль контрольных точек реестра'],
+      resp:'Своевременное проведение документов и корректность проводок.'
+    }
+  ],
+
+  employees: [
+    {name:'Иванов А.В.', position:'Финансовый директор', office:'Центральный офис'},
+    {name:'Петрова М.С.', position:'Главный бухгалтер', office:'Центральный офис'},
+    {name:'Сидоров К.Н.', position:'Начальник ФЭО', office:'Центральный офис'},
+    {name:'Кузнецова Е.А.', position:'Экономист ФЭО', office:'Центральный офис'},
+    {name:'Орлов Д.П.', position:'Начальник отдела закупок', office:'Центральный офис'},
+    {name:'Морозов В.И.', position:'Начальник отдела снабжения', office:'Центральный офис'},
+    {name:'Захаров П.С.', position:'Начальник удалённой базы', office:'Удалённая база'}
+  ],
+
+  route: [
+    {n:1, title:'Заявка подразделения', who:'Руководитель подразделения / удалённая база', due:'за 20 рабочих дней до планируемой даты', out:'Заявка на закупку (форма З-1)', cp:'Заявка зарегистрирована в реестре', note:'Удалённая база только формирует и передаёт заявку — согласование идёт в центральном офисе.'},
+    {n:2, title:'Проверка ФЭО', who:'Экономист ФЭО', due:'2 рабочих дня', out:'Виза «бюджет подтверждён» или мотивированный отказ', cp:'Соответствие ПФХД и лимитам', note:'Проверяются КБК, остаток лимита и обоснование НМЦК.'},
+    {n:3, title:'Планирование закупки', who:'Начальник отдела закупок', due:'3 рабочих дня', out:'Позиция плана-графика, способ закупки', cp:'Позиция внесена в план-график', note:'Конкурентные процедуры запускаются только после визы ФЭО.'},
+    {n:4, title:'Согласование договора', who:'Юридический блок, ФЭО, главный бухгалтер', due:'3 рабочих дня', out:'Лист согласования договора (форма С-2)', cp:'Все визы получены', note:'Юридический блок визирует договор, но в финансовый контур не входит.'},
+    {n:5, title:'Приёмка и первичные документы', who:'Отдел снабжения + удалённая база', due:'по факту поставки', out:'УПД, акт, ТТН, счёт', cp:'Комплект первички передан в бухгалтерию', note:'На удалённой базе — только сбор и передача, учёт не ведётся.'},
+    {n:6, title:'Заявка на оплату', who:'Инициатор → главный бухгалтер', due:'2 рабочих дня', out:'Заявка на оплату (форма П-3)', cp:'Комплектность проверена, лимит подтверждён', note:''},
+    {n:7, title:'Финансовый контроль и подпись', who:'Финансовый директор / директор', due:'1 рабочий день', out:'Заявка, разрешённая к оплате', cp:'Подпись финансового директора', note:'Суммы выше установленного порога — дополнительная подпись директора.'},
+    {n:8, title:'Оплата', who:'Бухгалтерия (казначейство)', due:'3 рабочих дня', out:'Платёжное поручение, выписка', cp:'Оплата исполнена', note:'Расчёты — с единого централизованного счёта учреждения.'},
+    {n:9, title:'Отражение в учёте', who:'Ведущий бухгалтер', due:'1 рабочий день после оплаты', out:'Проводки, карточка контрагента', cp:'Документ проведён и закрыт в реестре', note:''}
+  ],
+
+  statuses: [
+    {name:'Черновик', color:'#64748b'},
+    {name:'На согласовании', color:'#f59e0b'},
+    {name:'На доработке', color:'#8b5cf6'},
+    {name:'Согласован', color:'#0ea5e9'},
+    {name:'Отклонён', color:'#ef4444'},
+    {name:'Оплачен', color:'#10b981'},
+    {name:'Проведён в учёте', color:'#2563eb'}
+  ],
+
+  docs: [
+    {num:'З-1/2024-118', title:'Заявка на закупку щебня фр. 5–20', type:'Заявка', dept:'Отдел снабжения', resp:'Морозов В.И.', cp:'Заявка зарегистрирована', due:'12.04.2024', status:'На согласовании', note:'Требуется уточнение объёма по участку №3'},
+    {num:'С-2/2024-045', title:'Лист согласования договора на ремонт покрытия', type:'Договор', dept:'Отдел закупок', resp:'Орлов Д.П.', cp:'Все визы получены', due:'18.04.2024', status:'Согласован', note:'Юридический блок визировал без замечаний'},
+    {num:'П-3/2024-092', title:'Заявка на оплату по счёту №771', type:'Оплата', dept:'Бухгалтерия', resp:'Петрова М.С.', cp:'Подпись финдиректора', due:'22.04.2024', status:'Оплачен', note:''},
+    {num:'З-1/2024-121', title:'Заявка на ГСМ для дорожной техники', type:'Заявка', dept:'Удалённая производственная база', resp:'Захаров П.С.', cp:'Заявка зарегистрирована', due:'25.04.2024', status:'На доработке', note:'Не приложен расчёт расхода по путевым листам'},
+    {num:'П-3/2024-096', title:'Заявка на оплату услуг субподряда', type:'Оплата', dept:'Бухгалтерия', resp:'Петрова М.С.', cp:'Комплектность проверена', due:'29.04.2024', status:'На согласовании', note:'Ожидается подтверждение лимита от ФЭО'},
+    {num:'С-2/2024-051', title:'Лист согласования договора поставки битума', type:'Договор', dept:'Отдел закупок', resp:'Орлов Д.П.', cp:'Правовая экспертиза', due:'06.05.2024', status:'На доработке', note:'Замечание юриста: не указана ответственность за просрочку'},
+    {num:'З-1/2024-124', title:'Заявка на закупку дорожных знаков', type:'Заявка', dept:'Отдел снабжения', resp:'Морозов В.И.', cp:'Соответствие лимитам', due:'08.05.2024', status:'Согласован', note:''},
+    {num:'П-3/2024-101', title:'Заявка на оплату аренды спецтехники', type:'Оплата', dept:'Бухгалтерия', resp:'Иванов А.В.', cp:'Оплата исполнена', due:'14.05.2024', status:'Проведён в учёте', note:'Проводки сформированы, документ закрыт'},
+    {num:'З-1/2024-130', title:'Заявка на закупку материалов для ямочного ремонта', type:'Заявка', dept:'Удалённая производственная база', resp:'Захаров П.С.', cp:'Заявка зарегистрирована', due:'20.05.2024', status:'Черновик', note:'Комплект первички ещё не передан в центральный офис'},
+    {num:'С-2/2024-058', title:'Лист согласования договора на геодезию', type:'Договор', dept:'Отдел закупок', resp:'Орлов Д.П.', cp:'Все визы получены', due:'24.05.2024', status:'Отклонён', note:'Превышение лимита по КБК 244'}
+  ],
+
+  cases: [
+    {
+      cls:'', title:'Кейс 1. Заявка пришла с удалённой базы',
+      text:'Заявка поступила в конце дня с базы. Согласование на базе не выполняется — документ передаётся в центральный офис, регистрируется в реестре и проходит маршрут с этапа 2.',
+      out:'Результат: единая точка согласования, учёт не «расползается» по объектам.'
+    },
+    {
+      cls:'warn', title:'Кейс 2. Договор без визы юриста',
+      text:'Отдел закупок передал договор сразу на подпись. Маршрут блокируется на этапе 4: юридический блок обязан выдать визу, хотя в финансовый контур он не входит.',
+      out:'Результат: оплата невозможна до получения правовой визы.'
+    },
+    {
+      cls:'ok', title:'Кейс 3. Оплата сверх порога',
+      text:'Заявка на оплату превышает установленный порог подписи финансового директора — автоматически добавляется согласование директора учреждения.',
+      out:'Результат: двойной контроль без изменения форм и маршрутов.'
+    }
+  ],
+
+  limits: [
+    {cls:'', ico:'🏛', title:'Бухгалтерия — единая централизованная', text:'Никаких отдельных бухгалтерий в подразделениях и на базе. Весь учёт ведётся в одном центре.'},
+    {cls:'green', ico:'🏢', title:'Основные финансовые сотрудники — в центральном офисе', text:'ФЭО, закупки, снабжение, бухгалтерия работают в центральном офисе.'},
+    {cls:'gold', ico:'🚚', title:'Удалённая база — только сбор и передача первички', text:'На базе нет согласования, оплаты и учёта. Только формирование, сбор и передача комплекта документов.'},
+    {cls:'red', ico:'⚖', title:'Юридический блок — вне финансового контура', text:'Прямое подчинение директору. Визирует договоры, но не входит в финансовый контур.'},
+    {cls:'red', ico:'👥', title:'Кадровый блок — вне финансового контура', text:'Прямое подчинение директору. Не участвует в маршрутах согласования финансовых документов.'}
+  ],
+
+  tags: [
+    '1С: БГУ', 'ЕИС Закупки', 'СБИС', 'Электронный бюджет', 'Казначейство', 'ПФХД',
+    'План-график', 'Реестр контрактов', 'Excel / сводные', 'СЭД', 'Портал поставщиков',
+    'Контроль лимитов', 'Учёт ГСМ', 'Путевые листы', 'Складской учёт', 'Отчётность'
+  ]
+};
+
+/* ============================================================
+   ХРАНИЛИЩЕ
+   ============================================================ */
+const STORE_KEY = 'fd_road_workspace_v1';
+let DATA = loadData();
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){ const p = JSON.parse(raw); if(p && p.departments) return p; }
+  }catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+function saveData(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(DATA)); }catch(e){}
+}
+
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function statusColor(name){
+  const s = (DATA.statuses || []).find(x => x.name === name);
+  return s ? s.color : '#64748b';
+}
+function badge(name){
+  const c = statusColor(name);
+  return `<span class="badge" style="background:${c}1f;color:${c}">${esc(name)}</span>`;
+}
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tm);
+  t._tm = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* ============================================================
+   РЕНДЕР: ОРГСТРУКТУРА
+   ============================================================ */
+function renderOrg(){
+  const wrap = $('#orgTier');
+  wrap.innerHTML = DATA.departments.map(d => {
+    const isOut = d.contour === 'Вне финансового контура';
+    const isBase = d.office === 'Удалённая база';
+    const chip = isBase ? 'chip-base' : (isOut ? 'chip-out' : 'chip-fin');
+    return `
+      <div class="node" style="border-top:3px solid ${esc(d.color || '#2563eb')}">
+        <div class="role">${esc(d.contour)}</div>
+        <h4>${esc(d.name)}</h4>
+        <div class="meta" style="margin-bottom:8px">
+          Руководитель: <b>${esc(d.head)}</b><br>
+          Подчинение: <b>${esc(d.parent)}</b>
+        </div>
+        <span class="tag-chip ${chip}">${esc(d.office)}</span>
+      </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   РЕНДЕР: ДОЛЖНОСТИ
+   ============================================================ */
+const posState = { q:'', dept:'' };
+
+function renderPositions(){
+  const grid = $('#posGrid');
+  const q = posState.q.toLowerCase().trim();
+
+  const list = DATA.positions.filter(p => {
+    if(posState.dept && p.deptId !== posState.dept) return false;
+    if(!q) return true;
+    const hay = [p.title, p.dept, p.sub, p.subs, p.resp, (p.functions || []).join(' ')].join(' ').toLowerCase();
+    return hay.includes(q);
+  });
+
+  if(!list.length){
+    grid.innerHTML = `<div class="card empty" style="grid-column:1/-1">Ничего не найдено. Измените запрос или фильтр.</div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => `
+    <article class="card pos">
+      <div class="bar"></div>
+      <div class="dept">${esc(p.dept)}</div>
+      <h4>${esc(p.title)}</h4>
+      <ul>${(p.functions || []).map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+      <div class="resp">${esc(p.resp)}</div>
+      <div class="foot">
+        <div><b>Подчиняется:</b> ${esc(p.sub)}</div>
+        <div><b>В подчинении:</b> ${esc(p.subs)}</div>
+      </div>
+    </article>`).join('');
+}
+
+/* ============================================================
+   РЕНДЕР: МАРШРУТ
+   ============================================================ */
+let activeStep = 1;
+
+function renderFlow(){
+  const grid = $('#flowGrid');
+  grid.innerHTML = DATA.route.map(s => `
+    <button class="step ${s.n === activeStep ? 'active' : ''}" data-step="${s.n}">
+      <div class="num">${s.n}</div>
+      <div class="t">${esc(s.title)}</div>
+      <div class="w">${esc(s.who)}</div>
+    </button>`).join('');
+
+  $$('.step', grid).forEach(el => {
+    el.addEventListener('click', () => {
+      activeStep = Number(el.dataset.step);
+      renderFlow();
+    });
+  });
+
+  const s = DATA.route.find(x => x.n === activeStep) || DATA.route[0];
+  $('#flowDetail').innerHTML = `
+    <div class="detail">
+      <h3>Этап ${s.n}. ${esc(s.title)}</h3>
+      <div class="dgrid">
+        <div class="dcell"><span>Ответственный</span><p>${esc(s.who)}</p></div>
+        <div class="dcell"><span>Срок</span><p>${esc(s.due)}</p></div>
+        <div class="dcell"><span>Результат этапа</span><p>${esc(s.out)}</p></div>
+        <div class="dcell"><span>Контрольная точка</span><p>${esc(s.cp)}</p></div>
+      </div>
+      ${s.note ? `<div class="note">⚠ ${esc(s.note)}</div>` : ''}
+    </div>`;
+}
+
+/* ============================================================
+   РЕНДЕР: КЕЙСЫ
+   ============================================================ */
+function renderCases(){
+  $('#caseGrid').innerHTML = DATA.cases.map(c => `
+    <div class="case ${esc(c.cls)}">
+      <h4>${esc(c.title)}</h4>
+      <p>${esc(c.text)}</p>
+      <div class="out">${esc(c.out)}</div>
+    </div>`).join('');
+}
+
+/* ============================================================
+   РЕНДЕР: ФОРМЫ
+   ============================================================ */
+function renderForms(){
+  const deptOpts = DATA.departments.map(d => `<option>${esc(d.name)}</option>`).join('');
+  const empOpts  = DATA.employees.map(e => `<option>${esc(e.name)} — ${esc(e.position)}</option>`).join('');
+  const statOpts = DATA.statuses.map(s => `<option>${esc(s.name)}</option>`).join('');
+
+  $('#formsGrid').innerHTML = `
+    <form class="card form-card" data-form="З-1">
+      <div class="form-head"><span class="form-code">З-1</span><h4>Заявка на закупку</h4></div>
+      <div class="field"><label>Подразделение-инициатор</label><select name="dept">${deptOpts}</select></div>
+      <div class="field"><label>Инициатор</label><select name="resp">${empOpts}</select></div>
+      <div class="field"><label>Предмет закупки</label><input name="subject" placeholder="Например: щебень фр. 5–20" required></div>
+      <div class="row2">
+        <div class="field"><label>Сумма, ₽</label><input name="sum" type="number" min="0" step="0.01" placeholder="0.00"></div>
+        <div class="field"><label>КБК</label><input name="kbk" placeholder="244 / 00 00"></div>
+      </div>
+      <div class="field"><label>Обоснование</label><textarea name="reason" placeholder="Производственная необходимость, расчёт НМЦК"></textarea></div>
+      <div class="field"><label>Планируемый срок</label><input name="due" type="date"></div>
+      <button class="btn btn-primary" type="submit">Отправить в реестр</button>
+    </form>
+
+    <form class="card form-card" data-form="С-2">
+      <div class="form-head"><span class="form-code">С-2</span><h4>Лист согласования договора</h4></div>
+      <div class="field"><label>Контрагент</label><input name="subject" placeholder="Наименование поставщика" required></div>
+      <div class="row2">
+        <div class="field"><label>№ договора</label><input name="num" placeholder="Д-2024/___"></div>
+        <div class="field"><label>Сумма, ₽</label><input name="sum" type="number" min="0" step="0.01"></div>
+      </div>
+      <div class="field"><label>Подразделение-куратор</label><select name="dept">${deptOpts}</select></div>
+      <div class="field"><label>Ответственный</label><select name="resp">${empOpts}</select></div>
+      <div class="field"><label>Визировали</label>
+        <div class="checks">
+          <label><input type="checkbox" name="v-ur" checked> Юридический блок</label>
+          <label><input type="checkbox" name="v-feo" checked> ФЭО</label>
+          <label><input type="checkbox" name="v-buh" checked> Главный бухгалтер</label>
+        </div>
+      </div>
+      <div class="field"><label>Срок согласования</label><input name="due" type="date"></div>
+      <button class="btn btn-primary" type="submit">Отправить в реестр</button>
+    </form>
+
+    <form class="card form-card" data-form="П-3">
+      <div class="form-head"><span class="form-code">П-3</span><h4>Заявка на оплату</h4></div>
+      <div class="field"><label>Основание</label><input name="subject" placeholder="Договор / счёт №" required></div>
+      <div class="field"><label>Контрагент</label><input name="contragent" placeholder="Наименование"></div>
+      <div class="row2">
+        <div class="field"><label>Сумма, ₽</label><input name="sum" type="number" min="0" step="0.01"></div>
+        <div class="field"><label>КБК</label><input name="kbk" placeholder="244 / 00 00"></div>
+      </div>
+      <div class="field"><label>Подразделение</label><select name="dept">${deptOpts}</select></div>
+      <div class="field"><label>Комплектность документов</label>
+        <div class="checks">
+          <label><input type="checkbox" name="d-upd" checked> УПД</label>
+          <label><input type="checkbox" name="d-act" checked> Акт</label>
+          <label><input type="checkbox" name="d-inv"> Счёт</label>
+          <label><input type="checkbox" name="d-ttn"> ТТН</label>
+        </div>
+      </div>
+      <div class="field"><label>Срок оплаты</label><input name="due" type="date"></div>
+      <button class="btn btn-primary" type="submit">Отправить в реестр</button>
+    </form>`;
+
+  $$('#formsGrid form').forEach(f => f.addEventListener('submit', onSubmitForm));
+}
+
+function onSubmitForm(e){
+  e.preventDefault();
+  const f = e.target;
+  const code = f.dataset.form;
+  const fd = new FormData(f);
+  const get = k => (fd.get(k) || '').toString().trim();
+
+  const dateVal = get('due');
+  const due = dateVal ? dateVal.split('-').reverse().join('.') : '—';
+  const sum = get('sum') ? Number(get('sum')).toLocaleString('ru-RU') + ' ₽' : '';
+  const subject = get('subject') || 'Без названия';
+
+  const seq = String(DATA.docs.length + 1).padStart(3, '0');
+  const num = code === 'С-2' ? (get('num') || `С-2/2024-${seq}`) : `${code}/2024-${seq}`;
+
+  const cpMap = {
+    'З-1': 'Заявка зарегистрирована',
+    'С-2': 'Все визы получены',
+    'П-3': 'Комплектность проверена'
+  };
+  const typeMap = { 'З-1':'Заявка', 'С-2':'Договор', 'П-3':'Оплата' };
+
+  let note = '';
+  if(code === 'З-1' && !get('kbk')) note = 'Не указан КБК';
+  if(code === 'С-2' && !fd.get('v-ur')) note = 'Отсутствует виза юридического блока';
+  if(code === 'П-3' && !fd.get('d-upd') && !fd.get('d-act')) note = 'Не отмечена комплектность первичных документов';
+
+  DATA.docs.unshift({
+    num,
+    title: `${subject}${sum ? ' — ' + sum : ''}`,
+    type: typeMap[code],
+    dept: get('dept') || '—',
+    resp: (get('resp') || 'Не назначен').split(' — ')[0],
+    cp: cpMap[code],
+    due,
+    status: 'Черновик',
+    note: note || ''
+  });
+
+  saveData();
+  renderAll();
+  f.reset();
+  toast(`Документ ${num} добавлен в реестр со статусом «Черновик»`);
+  document.querySelector('[data-tab="registry"]').click();
+}
+
+/* ============================================================
+   РЕНДЕР: РЕЕСТР
+   ============================================================ */
+const docState = { q:'', status:'', dept:'' };
+
+function renderSummary(){
+  const counts = {};
+  DATA.statuses.forEach(s => counts[s.name] = 0);
+  DATA.docs.forEach(d => { counts[d.status] = (counts[d.status] || 0) + 1; });
+
+  $('#summaryStrip').innerHTML = DATA.statuses.map(s => `
+    <div class="sum-card" style="border-top-color:${s.color}">
+      <b style="color:${s.color}">${counts[s.name] || 0}</b>
+      <span>${esc(s.name)}</span>
+    </div>`).join('');
+}
+
+function renderDocs(){
+  const body = $('#docBody');
+  const q = docState.q.toLowerCase().trim();
+
+  const list = DATA.docs.filter(d => {
+    if(docState.status && d.status !== docState.status) return false;
+    if(docState.dept && d.dept !== docState.dept) return false;
+    if(!q) return true;
+    const hay = [d.num, d.title, d.type, d.dept, d.resp, d.cp, d.due, d.status, d.note].join(' ').toLowerCase();
+    return hay.includes(q);
+  });
+
+  if(!list.length){
+    body.innerHTML = `<tr><td colspan="8" class="empty">Документы не найдены. Измените условия поиска или фильтры.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = list.map(d => `
+    <tr>
+      <td><span class="doc-num">${esc(d.num)}</span><br><span style="font-size:11.5px;color:var(--muted)">${esc(d.type)}</span></td>
+      <td><span class="doc-title">${esc(d.title)}</span></td>
+      <td>${esc(d.dept)}</td>
+      <td>${esc(d.resp)}</td>
+      <td>${esc(d.cp)}</td>
+      <td style="white-space:nowrap">${esc(d.due)}</td>
+      <td>${badge(d.status)}</td>
+      <td class="note-cell">${d.note ? esc(d.note) : '<span style="opacity:.5">—</span>'}</td>
+    </tr>`).join('');
+}
+
+function fillFilters(){
+  const st = $('#docStatusFilter');
+  const curSt = st.value;
+  st.innerHTML = `<option value="">Все статусы</option>` +
+    DATA.statuses.map(s => `<option value="${esc(s.name)}">${esc(s.name)}</option>`).join('');
+  st.value = curSt;
+
+  const dp = $('#docDeptFilter');
+  const curDp = dp.value;
+  dp.innerHTML = `<option value="">Все подразделения</option>` +
+    DATA.departments.map(d => `<option value="${esc(d.name)}">${esc(d.name)}</option>`).join('');
+  dp.value = curDp;
+
+  const pf = $('#posDeptFilter');
+  const curPf = pf.value;
+  pf.innerHTML = `<option value="">Все подразделения</option>` +
+    DATA.departments.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
+  pf.value = curPf;
+}
+
+/* ============================================================
+   РЕНДЕР: ОГРАНИЧЕНИЯ / ТЕГИ
+   ============================================================ */
+function renderLimits(){
+  $('#limitGrid').innerHTML = DATA.limits.map(l => `
+    <div class="limit ${esc(l.cls)}">
+      <div class="ico">${esc(l.ico)}</div>
+      <div>
+        <h4>${esc(l.title)}</h4>
+        <p>${esc(l.text)}</p>
+      </div>
+    </div>`).join('');
+}
+
+function renderTags(){
+  $('#tagsGrid').innerHTML = DATA.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('');
+}
+
+/* ============================================================
+   СЧЁТЧИКИ
+   ============================================================ */
+function renderStats(){
+  $('#statDept').textContent  = DATA.departments.length;
+  $('#statPos').textContent   = DATA.positions.length;
+  $('#statSteps').textContent = DATA.route.length;
+  $('#statDocs').textContent  = DATA.docs.length;
+}
+
+/* ============================================================
+   ОБЩИЙ РЕНДЕР
+   ============================================================ */
+function renderAll(){
+  renderStats();
+  renderOrg();
+  fillFilters();
+  renderPositions();
+  renderFlow();
+  renderCases();
+  renderForms();
+  renderSummary();
+  renderDocs();
+  renderLimits();
+  renderTags();
+}
+
+/* ============================================================
+   НАВИГАЦИЯ
+   ============================================================ */
+$('#tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  $$('.tab').forEach(t => t.classList.toggle('active', t === btn));
+  $$('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + btn.dataset.tab));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ============================================================
+   ФИЛЬТРЫ И ПОИСК
+   ============================================================ */
+$('#posSearch').addEventListener('input', e => { posState.q = e.target.value; renderPositions(); });
+$('#posDeptFilter').addEventListener('change', e => { posState.dept = e.target.value; renderPositions(); });
+
+$('#docSearch').addEventListener('input', e => { docState.q = e.target.value; renderDocs(); });
+$('#docStatusFilter').addEventListener('change', e => { docState.status = e.target.value; renderDocs(); });
+$('#docDeptFilter').addEventListener('change', e => { docState.dept = e.target.value; renderDocs(); });
+$('#btnReset').addEventListener('click', () => {
+  docState.q = ''; docState.status = ''; docState.dept = '';
+  $('#docSearch').value = '';
+  $('#docStatusFilter').value = '';
+  $('#docDeptFilter').value = '';
+  renderDocs();
+  toast('Фильтры сброшены');
+});
+
+/* ============================================================
+   РЕЖИМ ПРЕДСТАВЛЕНИЯ
+   ============================================================ */
+$('#btnPresent').addEventListener('click', () => {
+  document.body.classList.toggle('present');
+  const on = document.body.classList.contains('present');
+  toast(on ? 'Включён режим подготовки материалов для руководства' : 'Режим руководства выключен');
+  if(on) window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ============================================================
+   ЭКСПОРТ
+   ============================================================ */
+function reportHTML(){
+  const now = new Date().toLocaleString('ru-RU');
+  const rows = DATA.docs.map(d => `
+    <tr>
+      <td>${esc(d.num)}</td><td>${esc(d.title)}</td><td>${esc(d.dept)}</td>
+      <td>${esc(d.resp)}</td><td>${esc(d.cp)}</td><td>${esc(d.due)}</td>
+      <td>${esc(d.status)}</td><td>${esc(d.note || '—')}</td>
+    </tr>`).join('');
+
+  const deps = DATA.departments.map(d => `
+    <tr><td>${esc(d.name)}</td><td>${esc(d.head)}</td><td>${esc(d.parent)}</td><td>${esc(d.office)}</td><td>${esc(d.contour)}</td></tr>`).join('');
+
+  const steps = DATA.route.map(s => `
+    <tr><td>${s.n}</td><td>${esc(s.title)}</td><td>${esc(s.who)}</td><td>${esc(s.due)}</td><td>${esc(s.cp)}</td></tr>`).join('');
+
+  return `
+    <h1>Финансовый контур дорожного учреждения</h1>
+    <p><b>Сформировано:</b> ${esc(now)}</p>
+
+    <h2>1. Организационная структура</h2>
+    <table border="1" cellspacing="0" cellpadding="6">
+      <tr><th>Подразделение</th><th>Руководитель</th><th>Подчинение</th><th>Офис</th><th>Контур</th></tr>
+      ${deps}
+    </table>
+
+    <h2>2. Маршрут движения документа</h2>
+    <table border="1" cellspacing="0" cellpadding="6">
+      <tr><th>№</th><th>Этап</th><th>Ответственный</th><th>Срок</th><th>Контрольная точка</th></tr>
+      ${steps}
+    </table>
+
+    <h2>3. Реестр рабочих документов</h2>
+    <table border="1" cellspacing="0" cellpadding="6">
+      <tr><th>№</th><th>Документ</th><th>Подразделение</th><th>Ответственный</th><th>Контрольная точка</th><th>Срок</th><th>Статус</th><th>Замечания</th></tr>
+      ${rows}
+    </table>
+
+    <h2>4. Зафиксированные ограничения</h2>
+    <ul>${DATA.limits.map(l => `<li><b>${esc(l.title)}</b> — ${esc(l.text)}</li>`).join('')}</ul>
+  `;
+}
+
+$('#btnWord').addEventListener('click', () => {
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8">
+      <title>Финансовый контур</title>
+      <style>
+        body{font-family:Calibri,Arial,sans-serif;font-size:12pt;color:#0f1e33}
+        h1{font-size:18pt;color:#0d2140} h2{font-size:14pt;color:#1d4ed8;margin-top:18pt}
+        table{border-collapse:collapse;width:100%;margin-top:8pt}
+        th,td{border:1px solid #94a3b8;padding:5pt;font-size:9.5pt;vertical-align:top}
+        th{background:#e8f0fb}
+      </style></head><body>${reportHTML()}</body></html>`;
+
+  const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Финансовый_контур_' + new Date().toISOString().slice(0, 10) + '.doc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Файл Word сформирован');
+});
+
+$('#btnPdf').addEventListener('click', () => {
+  toast('Открывается окно печати — выберите «Сохранить как PDF»');
+  setTimeout(() => window.print(), 400);
+});
+
+/* ============================================================
+   РЕДАКТОР ДАННЫХ
+   ============================================================ */
+const EDIT_SECTIONS = [
+  { key:'departments', label:'Подразделения' },
+  { key:'positions',   label:'Должности' },
+  { key:'employees',   label:'Сотрудники' },
+  { key:'route',       label:'Маршруты' },
+  { key:'statuses',    label:'Статусы' },
+  { key:'docs',        label:'Документы' },
+  { key:'cases',       label:'Кейсы' },
+  { key:'limits',      label:'Ограничения' },
+  { key:'tags',        label:'Инструменты' }
+];
+let editKey = 'departments';
+
+function openEditor(){
+  $('#overlay').classList.add('open');
+  renderEditTabs();
+  loadEditSection();
+}
+function renderEditTabs(){
+  $('#editTabs').innerHTML = EDIT_SECTIONS.map(s => `
+    <button class="btn ${s.key === editKey ? 'btn-primary' : 'btn-ghost'}"
+            style="padding:7px 13px;font-size:12.5px" data-edit="${s.key}">${esc(s.label)}</button>`).join('');
+  $$('#editTabs [data-edit]').forEach(b => b.addEventListener('click', () => {
+    editKey = b.dataset.edit;
+    renderEditTabs();
+    loadEditSection();
+  }));
+}
+function loadEditSection(){
+  const s = EDIT_SECTIONS.find(x => x.key === editKey);
+  $('#editSectionName').textContent = s ? s.label : editKey;
+  $('#editArea').value = JSON.stringify(DATA[editKey], null, 2);
+}
+
+$('#btnEdit').addEventListener('click', openEditor);
+$('#btnCancel').addEventListener('click', () => $('#overlay').classList.remove('open'));
+$('#overlay').addEventListener('click', e => { if(e.target.id === 'overlay') $('#overlay').classList.remove('open'); });
+
+$('#btnSave').addEventListener('click', () => {
+  try{
+    const parsed = JSON.parse($('#editArea').value);
+    DATA[editKey] = parsed;
+    saveData();
+    renderAll();
+    toast('Изменения сохранены');
+    $('#overlay').classList.remove('open');
+  }catch(err){
+    toast('Ошибка JSON: ' + err.message);
+  }
+});
+
+$('#btnResetAll').addEventListener('click', () => {
+  if(!confirm('Вернуть исходную демонстрационную модель? Все изменения будут потеряны.')) return;
+  DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  saveData();
+  renderAll();
+  loadEditSection();
+  toast('Данные сброшены к исходным');
+});
+
+/* ============================================================
+   СТАРТ
+   ============================================================ */
+renderAll();
+</script>
+</body>
+</html>
